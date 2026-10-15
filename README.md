@@ -46,8 +46,6 @@ CineBusca/
 │   └── img/
 │       ├── banner-cine.webp   Imagen de fondo del banner
 │       └── sin-poster.svg     Imagen para películas sin póster
-├── docs/
-│   └── guion-presentacion.md  Guion para la demostración de 3 minutos
 ├── .gitignore                 Archivos que Git no debe subir
 └── README.md
 ```
@@ -152,7 +150,7 @@ Lo usé a través de **Claude Code**, en la aplicación de escritorio de Claude.
 - agregó el manejo de errores, el indicador de carga y los mensajes para el usuario;
 - revisó el código, encontró y corrigió errores, y separó la clave de la API en `js/config.js`;
 - rediseñó la interfaz usando como fondo la imagen que yo generé;
-- redactó este README y el guion de la presentación;
+- redactó este README;
 - ejecutó, con mi autorización, los comandos de Git para crear los commits y subir el proyecto a GitHub.
 
 Claude también probó la aplicación en un navegador integrado y me explicó el código y las correcciones.
@@ -178,4 +176,4 @@ El detalle de los prompts, los errores encontrados y lo que aprendí se registra
 - [x] README con instrucciones de ejecución y declaración de uso de IA (este archivo)
 - [ ] Captura de GitHub Pro activo o del estado de la solicitud, con enlace al perfil: <https://github.com/aneley1234>
 - [ ] Bitácora de programación con IA (de una a dos páginas)
-- [ ] Demostración en clase o video de máximo 3 minutos (guion en [`docs/guion-presentacion.md`](docs/guion-presentacion.md))
+- [ ] Demostración en clase o video de máximo 3 minutos
