@@ -103,7 +103,7 @@ Escribe el nombre de una película, por ejemplo `batman`. Los títulos en inglé
 | Datos y pósters | [OMDb API](https://www.omdbapi.com/) | Clave gratuita con límite diario. Los pósters pertenecen a sus respectivos dueños. |
 | Tipografía Poppins | Google Fonts | SIL Open Font License 1.1 |
 | Iconos (claqueta, lupa, cinta, flecha) | Dibujados con código SVG dentro del proyecto | Propios |
-| Imagen del banner | _Completar: indica de dónde obtuviste la imagen_ | _Completar: condiciones de uso de ese sitio_ |
+| Imagen del banner | Generada con inteligencia artificial en **ChatGPT** (OpenAI) | Según los [Términos de uso de OpenAI](https://openai.com/policies/terms-of-use/), OpenAI cede al usuario sus derechos sobre el contenido generado, siempre que se cumplan esos términos. Se usa aquí con fines educativos. |
 
 ## Declaración de uso de inteligencia artificial
 
@@ -116,6 +116,6 @@ Durante el desarrollo utilicé **Claude**, de Anthropic, a través de **Claude C
 - rediseñar la interfaz a partir de una imagen de fondo que yo proporcioné;
 - preparar este README y el guion de la presentación.
 
-Revisé las respuestas, probé la aplicación en el navegador y pedí correcciones cuando algo no funcionaba. El proceso completo, con los prompts, los errores encontrados y lo que aprendí, está en mi bitácora de programación con IA.
+También utilicé **ChatGPT**, de OpenAI, para **generar la imagen de fondo del banner** (`assets/img/banner-cine.webp`). La imagen no contiene texto; el título, el subtítulo y el buscador están hechos con HTML y CSS.
 
-_Si usaste otras herramientas de IA, agrégalas aquí._
+Revisé las respuestas, probé la aplicación en el navegador y pedí correcciones cuando algo no funcionaba. El proceso completo, con los prompts, los errores encontrados y lo que aprendí, está en mi bitácora de programación con IA.
