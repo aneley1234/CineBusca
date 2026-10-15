@@ -1,0 +1,5 @@
+# Clave privada de la API
+js/config.js
+
+# Configuración local del editor/asistente (no es parte de la aplicación)
+.claude/
