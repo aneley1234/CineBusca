@@ -1,0 +1,819 @@
+/* =========================================================
+   1. VARIABLES (colores y medidas que se repiten)
+   Si cambias un valor aquí, cambia en toda la página.
+   ========================================================= */
+:root {
+  /* Fondos: del más oscuro al más claro */
+  --color-fondo: #080d1a;
+  --color-superficie: #0f1628;   /* tarjetas */
+  --color-superficie-2: #172038; /* botones y etiquetas */
+
+  /* Textos */
+  --color-texto: #f5f7ff;
+  --color-texto-suave: #94a0bf;  /* gris azulado */
+
+  /* Detalles de color */
+  --color-violeta: #8b5cf6;
+  --color-violeta-claro: #c4b5fd;
+  --color-morado: #a855f7;
+  --color-azul: #3b82f6;         /* azul eléctrico */
+  --color-error: #f87191;
+  --color-estrella: #fbbf24;
+  --degradado: linear-gradient(135deg, #c084fc 0%, #8b5cf6 50%, #3b82f6 100%);
+
+  /* Bordes, esquinas y sombras */
+  --borde: 1px solid rgba(148, 163, 209, 0.12);
+  --radio: 16px;
+  --sombra: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --brillo: 0 0 0 1px rgba(139, 92, 246, 0.35), 0 8px 32px rgba(139, 92, 246, 0.18);
+  --transicion: 0.25s ease;
+}
+
+/* =========================================================
+   2. REINICIO BÁSICO
+   Quita márgenes del navegador para que todo se vea igual.
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', system-ui, sans-serif;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1; /* empuja el pie de página hasta abajo */
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Centra el contenido y deja espacio a los lados */
+.contenedor {
+  width: min(1200px, 100% - 32px);
+  margin-inline: auto;
+}
+
+/* Texto oculto a la vista, pero que leen los lectores de pantalla */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Texto pintado con el degradado violeta (logo y palabra "película") */
+.texto-degradado {
+  background: var(--degradado);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* =========================================================
+   3. ENCABEZADO
+   ========================================================= */
+.encabezado {
+  position: sticky; /* se queda fijo arriba al hacer scroll */
+  top: 0;
+  z-index: 10;
+  background: rgba(8, 13, 26, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(148, 163, 209, 0.08);
+}
+
+.encabezado__contenido {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 14px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Cuadro con degradado donde va la claqueta */
+.logo__icono {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--degradado);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+}
+
+.logo__icono svg {
+  width: 22px;
+  height: 22px;
+}
+
+.encabezado__nav {
+  color: var(--color-texto-suave);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+.encabezado__punto {
+  color: var(--color-violeta);
+  margin-inline: 6px;
+}
+
+/* =========================================================
+   4. BANNER (imagen de fondo + título + buscador)
+   ========================================================= */
+.banner {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(400px, 42vw, 540px); /* alto equilibrado según el ancho */
+  padding: 56px 0;
+  text-align: center;
+  background-color: var(--color-fondo);
+
+  /* Capas de fondo: la primera queda ARRIBA de las demás.
+     1) degradado vertical: oscurece arriba y funde la parte de abajo con la página
+     2) sombra ovalada en el centro: hace que el texto se lea bien
+     3) la imagen del banner (ruta relativa desde la carpeta css/) */
+  background-image:
+    linear-gradient(to bottom, rgba(8, 13, 26, 0.55) 0%, rgba(8, 13, 26, 0.1) 35%, rgba(8, 13, 26, 0.35) 75%, var(--color-fondo) 100%),
+    radial-gradient(ellipse 55% 60% at 50% 50%, rgba(8, 13, 26, 0.7) 0%, rgba(8, 13, 26, 0) 100%),
+    url('../assets/img/banner-cine.webp');
+  background-size: cover;         /* llena el banner sin deformar la imagen */
+  background-position: center 60%; /* recorte centrado, un poco hacia abajo */
+  background-repeat: no-repeat;
+}
+
+.banner__contenido {
+  max-width: 760px;
+}
+
+.banner__titulo {
+  font-size: clamp(1.75rem, 4.5vw, 3.2rem); /* tamaño que se adapta a la pantalla */
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance; /* reparte las palabras para que no quede una sola abajo */
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
+}
+
+.banner__subtitulo {
+  margin: 14px auto 32px;
+  max-width: 560px;
+  text-wrap: balance;
+  color: #c9d0e6;
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* ---- Barra de búsqueda ---- */
+/* En computadora: una sola "píldora" con la lupa, el campo y el botón dentro */
+.buscador {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 640px;
+  margin-inline: auto;
+  padding: 6px;
+  background: rgba(15, 22, 40, 0.82);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(148, 163, 209, 0.18);
+  border-radius: 999px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45), 0 0 24px rgba(139, 92, 246, 0.12);
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+}
+
+/* Brillo violeta cuando el usuario está escribiendo */
+.buscador:focus-within {
+  border-color: rgba(139, 92, 246, 0.6);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45), 0 0 0 4px rgba(139, 92, 246, 0.15), 0 0 32px rgba(139, 92, 246, 0.25);
+}
+
+/* Borde rosa si se intentó buscar con el campo vacío
+   (:has = "si dentro tiene un elemento con esa clase") */
+.buscador:has(.buscador__campo--error) {
+  border-color: var(--color-error);
+}
+
+.buscador__caja {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0; /* permite que el campo se encoja sin desbordarse */
+  padding-left: 16px;
+}
+
+.buscador__icono {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--color-texto-suave);
+}
+
+.buscador__campo {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 4px;
+  font: inherit;
+  color: var(--color-texto);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.buscador__campo::placeholder {
+  color: var(--color-texto-suave);
+}
+
+/* Botón violeta con brillo suave */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 30px;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #9d6bff 0%, #7c3aed 100%);
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.45);
+  cursor: pointer;
+  transition: transform var(--transicion), box-shadow var(--transicion), filter var(--transicion);
+}
+
+.boton:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 28px rgba(124, 58, 237, 0.6);
+}
+
+.boton:active {
+  transform: scale(0.97);
+}
+
+.boton:focus-visible {
+  outline: 2px solid var(--color-violeta-claro);
+  outline-offset: 3px;
+}
+
+/* Botón desactivado mientras se busca */
+.boton:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+}
+
+/* =========================================================
+   5. RESULTADOS
+   ========================================================= */
+.resultados {
+  padding: 40px 0 72px;
+}
+
+.resultados__cabecera {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.resultados__icono {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  color: var(--color-violeta-claro);
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+.resultados__icono svg {
+  width: 22px;
+  height: 22px;
+}
+
+.resultados__titulo {
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
+
+.resultados__subtitulo {
+  color: var(--color-texto-suave);
+  font-size: 0.9rem;
+}
+
+/* Etiqueta con el número de resultados */
+.contador {
+  margin-left: auto; /* la empuja a la derecha */
+  padding: 4px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--color-violeta-claro);
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 999px;
+}
+
+/* El atributo hidden debe ganar aunque la clase tenga display */
+[hidden] {
+  display: none !important;
+}
+
+.resultados__mensaje {
+  color: var(--color-texto-suave);
+  margin: 16px 0 24px;
+}
+
+/* Mensaje de error (lo activa JavaScript) */
+.resultados__mensaje--error {
+  color: var(--color-error);
+  font-weight: 500;
+}
+
+/* ---- Indicador de carga ---- */
+/* Círculo que gira (se usa en el botón y en el mensaje) */
+.cargador,
+.resultados__mensaje--cargando::before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent; /* el hueco hace que se note el giro */
+  border-radius: 50%;
+  vertical-align: -0.15em;
+  animation: girar 0.7s linear infinite;
+}
+
+.resultados__mensaje--cargando::before {
+  margin-right: 8px;
+  color: var(--color-violeta);
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+/* Las tarjetas anteriores se ven apagadas mientras llegan las nuevas */
+.rejilla--cargando {
+  opacity: 0.4;
+  pointer-events: none;
+  transition: opacity var(--transicion);
+}
+
+/* ---- Cuadrícula de tarjetas ---- */
+/* auto-fill acomoda tantas columnas como quepan (mínimo 190px cada una) */
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 24px;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-superficie);
+  border: var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  transition: transform var(--transicion), border-color var(--transicion), box-shadow var(--transicion);
+}
+
+/* Al pasar el cursor: sube un poco y aparece un borde violeta discreto */
+.tarjeta:hover {
+  transform: translateY(-4px);
+  border-color: rgba(139, 92, 246, 0.45);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45), 0 0 24px rgba(139, 92, 246, 0.12);
+}
+
+.tarjeta__portada {
+  position: relative; /* para colocar la calificación encima del póster */
+}
+
+.tarjeta__poster {
+  width: 100%;
+  aspect-ratio: 2 / 3; /* proporción típica de un póster */
+  object-fit: cover;   /* recorta sin deformar */
+  background: var(--color-superficie-2);
+}
+
+/* Calificación sobre el póster (solo aparece si la API la da) */
+.tarjeta__calificacion {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(8, 13, 26, 0.78);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+}
+
+.tarjeta__estrella {
+  color: var(--color-estrella);
+}
+
+.tarjeta__info {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px;
+}
+
+.tarjeta__texto {
+  min-width: 0;
+}
+
+.tarjeta__titulo {
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.tarjeta__anio {
+  margin-top: 2px;
+  color: var(--color-texto-suave);
+  font-size: 0.85rem;
+}
+
+/* Botón circular con flecha */
+.tarjeta__boton {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: var(--color-violeta-claro);
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  transition: background var(--transicion), color var(--transicion), transform var(--transicion);
+}
+
+.tarjeta__boton svg {
+  width: 18px;
+  height: 18px;
+}
+
+.tarjeta__boton:hover,
+.tarjeta__boton:focus-visible {
+  color: #fff;
+  background: var(--color-violeta);
+  transform: translateX(2px);
+  outline: none;
+}
+
+/* Mientras cargan los detalles: se oculta la flecha y gira un círculo */
+.tarjeta__boton--cargando {
+  cursor: wait;
+}
+
+.tarjeta__boton--cargando svg {
+  visibility: hidden;
+}
+
+.tarjeta__boton--cargando::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+}
+
+/* Cuando la película no tiene id, no se pueden pedir detalles */
+.tarjeta__boton--inactivo,
+.tarjeta__boton--inactivo:hover {
+  color: var(--color-texto-suave);
+  background: transparent;
+  border-color: rgba(148, 163, 209, 0.15);
+  transform: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   6. DETALLES (ventana emergente / modal)
+   Está oculta y aparece cuando la URL termina en #detalles.
+   ========================================================= */
+.detalles {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transicion), visibility var(--transicion);
+}
+
+/* :target = el elemento cuyo id coincide con el # de la URL */
+.detalles:target {
+  opacity: 1;
+  visibility: visible;
+}
+
+.detalles__fondo {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 7, 15, 0.8);
+  backdrop-filter: blur(6px);
+}
+
+.detalles__ventana {
+  position: relative; /* queda por encima del fondo */
+  width: min(880px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 28px;
+  padding: 28px;
+  background: var(--color-superficie);
+  border: var(--borde);
+  border-radius: 20px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  transform: scale(0.96);
+  transition: transform var(--transicion);
+}
+
+.detalles:target .detalles__ventana {
+  transform: scale(1);
+}
+
+.detalles__cerrar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--color-texto-suave);
+  background: var(--color-superficie-2);
+  transition: background var(--transicion), color var(--transicion);
+}
+
+.detalles__cerrar:hover {
+  color: #fff;
+  background: var(--color-violeta);
+}
+
+.detalles__poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  border: var(--borde);
+}
+
+.detalles__titulo {
+  font-size: 1.8rem;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  padding-right: 44px; /* para no chocar con el botón de cerrar */
+}
+
+.detalles__etiquetas {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.etiqueta {
+  padding: 4px 12px;
+  font-size: 0.82rem;
+  color: #c9d0e6;
+  background: var(--color-superficie-2);
+  border: var(--borde);
+  border-radius: 999px;
+}
+
+.etiqueta--calificacion {
+  color: #fff;
+  font-weight: 600;
+  background: rgba(139, 92, 246, 0.2);
+  border-color: rgba(139, 92, 246, 0.45);
+}
+
+.detalles__subtitulo {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.detalles__texto {
+  color: var(--color-texto-suave);
+  margin-bottom: 22px;
+}
+
+.detalles__datos {
+  display: grid;
+  gap: 12px;
+}
+
+.detalles__datos dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-violeta-claro);
+  font-weight: 600;
+}
+
+/* =========================================================
+   7. PIE DE PÁGINA
+   ========================================================= */
+.pie {
+  padding: 24px 0;
+  text-align: center;
+  color: var(--color-texto-suave);
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(148, 163, 209, 0.08);
+}
+
+.pie a {
+  color: var(--color-violeta-claro);
+}
+
+.pie a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   8. DISEÑO ADAPTABLE (responsive)
+   Reglas que solo se aplican en pantallas más pequeñas.
+   ========================================================= */
+
+/* Tabletas y celulares: la imagen es muy ancha, así que en vez de recortarla
+   (y perder las palomitas y el carrete) la mostramos completa en la parte de abajo
+   y la fundimos con el fondo oscuro. */
+@media (max-width: 900px) {
+  .banner {
+    min-height: auto;
+    padding: 56px 0 calc(40vw * 0.55); /* deja ver la imagen debajo del buscador */
+    background-image:
+      linear-gradient(to bottom, var(--color-fondo) 0%, rgba(8, 13, 26, 0) 35%, rgba(8, 13, 26, 0) 70%, var(--color-fondo) 100%),
+      url('../assets/img/banner-cine.webp');
+    /* La imagen mide 1983 × 793 (alto = 40 % del ancho).
+       La 1.ª capa (degradado) mide lo mismo que la imagen para fundir su borde superior. */
+    background-size: 100% 40vw, 100% auto;
+    background-position: center bottom, center bottom;
+  }
+
+  .detalles__ventana {
+    grid-template-columns: 1fr; /* póster arriba, información abajo */
+    padding: 20px;
+  }
+
+  .detalles__poster {
+    max-width: 220px;
+    margin-inline: auto;
+  }
+}
+
+/* Celulares */
+@media (max-width: 560px) {
+  .encabezado__nav {
+    display: none; /* ocultamos la navegación para ahorrar espacio */
+  }
+
+  .banner {
+    padding-top: 40px;
+  }
+
+  .banner__subtitulo {
+    margin-bottom: 24px;
+  }
+
+  /* El buscador se reorganiza: campo arriba y botón debajo, a todo el ancho */
+  .buscador {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .buscador:focus-within {
+    box-shadow: none;
+  }
+
+  .buscador__caja {
+    padding: 4px 16px;
+    background: rgba(15, 22, 40, 0.85);
+    border: 1px solid rgba(148, 163, 209, 0.18);
+    border-radius: 999px;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.12);
+    transition: border-color var(--transicion), box-shadow var(--transicion);
+  }
+
+  .buscador__caja:focus-within {
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+  }
+
+  .buscador:has(.buscador__campo--error) .buscador__caja {
+    border-color: var(--color-error);
+  }
+
+  .resultados {
+    padding-top: 28px;
+  }
+
+  .resultados__cabecera {
+    flex-wrap: wrap;
+  }
+
+  .resultados__titulo {
+    font-size: 1.2rem;
+  }
+
+  .rejilla {
+    grid-template-columns: repeat(2, 1fr); /* dos tarjetas por fila */
+    gap: 14px;
+  }
+
+  .tarjeta__info {
+    padding: 10px;
+  }
+
+  .tarjeta__titulo {
+    font-size: 0.88rem;
+  }
+
+  .tarjeta__boton {
+    width: 32px;
+    height: 32px;
+  }
+
+  .detalles__titulo {
+    font-size: 1.4rem;
+  }
+}
+
+/* Si el usuario pidió menos animaciones en su sistema, las reducimos */
+@media (prefers-reduced-motion: reduce) {
+  .cargador,
+  .resultados__mensaje--cargando::before,
+  .tarjeta__boton--cargando::after {
+    animation-duration: 2s;
+  }
+
+  .tarjeta:hover {
+    transform: none;
+  }
+}
